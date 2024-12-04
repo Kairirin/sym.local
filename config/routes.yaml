@@ -6,3 +6,6 @@ controllers:
 index:
  path: /
  controller: App\Controller\DefaultController::index
+uno:
+ path: /uno
+ controller: App\Controller\DefaultController::index1

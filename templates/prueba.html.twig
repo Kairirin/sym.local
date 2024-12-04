@@ -1,4 +1,24 @@
 <html>
-<head><title>Prueba Twig</title></head>
-<body><p>Holis</p></body>
+	<head>
+		<title>Prueba Twig</title>
+	</head>
+	<body>
+		{% if nombre is defined %}
+			<p>Hola
+				{{ nombre }}!!</p>
+		{% else %}
+			<p>Hola mundo !!</p>
+		{% endif %}
+
+		<p>Nombres:
+		</p>
+		<ul>
+			{% for nom in nombres %}
+				<li>{{ nom }}</li>
+			{% endfor %}
+		</ul>
+
+		<p> Fecha:</p>
+		<p>{{ fecha | date("d/M/y") }}</p>
+	</body>
 </html>
