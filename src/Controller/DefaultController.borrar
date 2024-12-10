@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Imagen;
+use DateTime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+
+class DefaultController extends AbstractController
+{
+    #[Route('/', name: 'sym_index')]
+    public function index()
+    {
+        $nombre = 'María';
+        $saludo = 'Buenos días';
+        $nombres = ['Ana', 'Enrique', 'Laura', 'Pablo'];
+
+        return $this->render('prueba.html.twig', [ //Seleccionamos el html que abriremos y enviamos las variables. También se podría mandar como array
+            'nombre' => $nombre,
+            'saludo' => $saludo,
+            'nombres' => $nombres,
+            'fecha' => new DateTime()
+        ]);
+    }
+
+    #[Route('/dos', name: 'sym_index2')]
+    public function index2()
+    {
+        return $this->render('prueba1.html.twig');
+    }
+
+    #[Route('/uno', name: 'sym_index1')]
+    public function index1()
+    {
+        $nombre = 'Juan';
+        $saludo = 'Buenos días a todos';
+        $nombres = ['Ana', 'Enrique', 'Laura', 'Pablo'];
+        return $this->render('prueba2.html.twig', [
+            'nombre' => $nombre,
+            'saludo' => $saludo,
+            'nombres' => $nombres,
+            'fecha' => new \DateTime()
+        ]);
+    }
+    #[Route('/galeria', name: 'imagenes')]
+    public function imagenes()
+    {
+        $imagenesHome[] = new Imagen('1.jpg', 'Imagen_1',1,456,61,130);
+        $imagenesHome[] = new Imagen('1.jpg', 'Imagen_1',1,456,61,130);
+        $imagenesHome[] = new Imagen('2.jpg', 'Imagen_2',2,455,64,130);
+        $imagenesHome[] = new Imagen('3.jpg', 'Imagen_3',3,4,10,130);
+        $imagenesHome[] = new Imagen('4.jpg', 'Imagen_4',1,46,50,130);
+        $imagenesHome[] = new Imagen('9.jpg', 'Imagen_9',1,156,610,130);
+        $imagenesHome[] = new Imagen('10.jpg', 'Imagen_10',2,956,610,130);
+        $imagenesHome[] = new Imagen('11.jpg', 'Imagen_11',3,1456,610,130);
+        $imagenesHome[] = new Imagen('12.jpg', 'Imagen_12',1,4356,610,130);
+        $imagenesHome[] = new Imagen('12.jpg', 'Imagen_12',1,4356,610,130);
+
+        return $this->render('imagenes.html.twig', [
+            'imagenes' => $imagenesHome
+        ]);
+    }
+}

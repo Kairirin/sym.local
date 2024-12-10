@@ -1,3 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<header>
+	<h1>
+		<img src="{{ asset('images/index/gallery/1.jpg') }}" alt="Pruebas">Aplicación de ejemplo
+	</h1>
+</header>
+
 <table border="1">
 	<th>Nombre</th>
 	<th>Descripción</th>
@@ -14,3 +23,5 @@
 		</tr>
 	{% endfor %}
 </table>
+
+{% endblock %}

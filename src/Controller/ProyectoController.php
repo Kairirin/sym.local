@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Imagen;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProyectoController extends AbstractController
 {
+    #[Route('/', name: 'sym_index')]
     public function index()
     {
         $imagenesHome[] = new Imagen('1.jpg', 'Imagen_1',1,456,61,130);
@@ -20,8 +22,32 @@ class ProyectoController extends AbstractController
         $imagenesHome[] = new Imagen('12.jpg', 'Imagen_12',1,4356,610,130);
         $imagenesHome[] = new Imagen('12.jpg', 'Imagen_12',1,4356,610,130);
 
-        return $this->render('imagenes.html.twig', [
+        return $this->render('index.view.html.twig', [
             'imagenes' => $imagenesHome
         ]);
+    }
+    #[Route('/about', name: 'sym_about')]
+    public function about()
+    {
+        $imagenesClientes[] = new Imagen('client1.jpg', 'SANDRA');
+        $imagenesClientes[] = new Imagen('client2.jpg', 'PEDRO');
+        $imagenesClientes[] = new Imagen('client3.jpg', 'CRUZ');
+        $imagenesClientes[] = new Imagen('client4.jpg', 'IRENE');
+
+        return $this->render('about.view.html.twig', [
+            'clientes' => $imagenesClientes
+        ]);
+    }
+
+    #[Route('/blog', name: 'sym_blog')]
+    public function blog()
+    {
+        return $this->render('blog.view.html.twig');
+    }
+
+    #[Route('/contact', name: 'sym_contact')]
+    public function contact()
+    {
+        return $this->render('contact.view.html.twig');
     }
 }
