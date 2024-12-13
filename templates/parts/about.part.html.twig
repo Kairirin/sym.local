@@ -5,7 +5,7 @@
            {% for cliente in clientes %}
               <div class="col-xs-12 col-sm-3">
                 <img class="img-responsive" src="{{ asset(cliente.getUrlClientes()) }}" alt="client's picture">
-                <h5>{{ cliente.getNombre() }}</h5>
+                <h5>{{ cliente.getDescripcion() }}</h5>
                 <q>{{ cliente.getDescripcion() }}</q>
               </div>
             {% endfor %}

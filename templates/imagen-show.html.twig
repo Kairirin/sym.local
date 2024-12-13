@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block principal %}
+    <!-- Principal Content Start -->
+    <div id="galeria">
+        <div class="container">
+            <div class="col-xs-12 col-sm-8 col-sm-push-2">
+                <h1>IMAGEN GALERIA</h1>
+                <hr>
+                <div class="imagenes_galeria">
+                    <img src="{{ asset(imagen.getUrlSubidas()) }}" alt="{{ imagen.getDescripcion() }}" title="{{ imagen.getDescripcion() }}" width="500px">
+                    <br>Descripción: {{ imagen.getDescripcion() }}
+                    <br>Categoria:{{ imagen.getCategoria() }} 
+                    <br>Número de visualizaciones: {{ imagen.getNumVis() }}
+                    <br>Número de likes: {{ imagen.getNumLikes() }}
+                    <br>Número de downloads: {{ imagen.getNumDown() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

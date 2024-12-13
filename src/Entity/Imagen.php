@@ -1,15 +1,35 @@
 <?php
+
 namespace App\Entity;
 
-class Imagen implements IEntity
+use App\Repository\ImagenRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: ImagenRepository::class)]
+class Imagen
 {
-    private $id;
-    private $nombre;
-    private $descripcion;
-    private $categoria;
-    private $numVisualizaciones;
-    private $numLikes;
-    private $numDownloads;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 200)]
+    private ?string $nombre = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $descripcion = null;
+
+    #[ORM\Column]
+    private ?int $categoria = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numVisualizaciones = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numLike = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numDownload = null;
 
     const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
     const RUTA_IMAGENES_GALERIA = 'images/index/gallery/';
@@ -26,63 +46,82 @@ class Imagen implements IEntity
         $this->numLikes = $numLikes;
         $this->numDownloads = $numDownloads;
     }
-    public function setNombre($nombre): Imagen
-    {
-        $this->nombre = $nombre;
-        return $this; //Estamos devolviendo this, la referencia a la misma clase. Por eso arriba pone el nombre de la clase.
-    }
-    public function setDescripcion($descripcion): Imagen
-    {
-        $this->descripcion = $descripcion;
-        return $this;
-    }
-    public function setCategoria($categoria): Imagen
-    {
-        $this->categoria = $categoria;
-        return $this;
-    }
-    public function setNumVis($numVis): Imagen
-    {
-        $this->numVisualizaciones = $numVis;
-        return $this;
-    }
-    public function setNumLikes($numLikes): Imagen
-    {
-        $this->numLikes = $numLikes;
-        return $this;
-    }
-    public function setNumDown($numDownloads): Imagen
-    {
-        $this->numDownloads = $numDownloads;
-        return $this;
-    }
-    public function getId()
+
+    public function getId(): ?int
     {
         return $this->id;
     }
+
     public function getNombre(): ?string
-    { 
+    {
         return $this->nombre;
     }
-    public function getDescripcion(): string
+
+    public function setNombre(string $nombre): static
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
     {
         return $this->descripcion;
     }
-    public function getCategoria(): int
+
+    public function setDescripcion(?string $descripcion): static
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getCategoria(): ?int
     {
         return $this->categoria;
     }
-    public function getNumVis(): int
+
+    public function setCategoria(int $categoria): static
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getNumVis(): ?int
     {
         return $this->numVisualizaciones;
     }
-    public function getNumLikes(): int
+
+    public function setNumVis(int $numVis): static
     {
-        return $this->numLikes;
+        $this->numVisualizaciones = $numVis;
+
+        return $this;
     }
-    public function getNumDown(): int
+
+    public function getNumLikes(): ?int
     {
-        return $this->numDownloads;
+        return $this->numLike;
+    }
+
+    public function setNumLikes(int $numLike): static
+    {
+        $this->numLike = $numLike;
+
+        return $this;
+    }
+
+    public function getNumDown(): ?int
+    {
+        return $this->numDownload;
+    }
+
+    public function setNumDown(int $numDown): static
+    {
+        $this->numDownload = $numDown;
+
+        return $this;
     }
     public function __toString()
     {
@@ -103,17 +142,5 @@ class Imagen implements IEntity
     public function getUrlSubidas(): string
     {
         return self::RUTA_IMAGENES_SUBIDAS . $this->getNombre();
-    }
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'nombre' => $this->getNombre(),
-            'descripcion' => $this->getDescripcion(),
-            'numVisualizaciones' => $this->getNumVis(),
-            'numLikes' => $this->getNumLikes(),
-            'numDownloads' => $this->getNumDown(),
-            'categoria' => $this->getCategoria()
-        ];
     }
 }
