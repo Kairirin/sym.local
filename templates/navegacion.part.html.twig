@@ -34,6 +34,20 @@
           {% endif %}
           <a href={{ path('sym_blog') }}><i class="fa fa-file-text sr-icons"></i> Blog</a>
         </li>
+        {% if app.request.pathinfo=='/imagen' %}
+        <li class="active lien">
+          {% else %}
+        <li class="lien">
+          {% endif %}
+          <a href={{ path('app_imagen_index') }}><i class="fa fa-file-text sr-icons"></i> Galería</a>
+        </li>
+        {% if app.request.pathinfo=='/asociado' %}
+        <li class="active lien">
+          {% else %}
+        <li class="lien">
+          {% endif %}
+          <a href={{ path('app_asociado_index') }}><i class="fa fa-file-text sr-icons"></i> Asociados</a>
+        </li>
         {% if app.request.pathinfo=='/contact' %}
         <li class="active lien">
           {% else %}

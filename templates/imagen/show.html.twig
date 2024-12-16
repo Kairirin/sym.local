@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Imagen {{ imagen.id }}
+{% endblock %}
+
+{% block principal %}
+	<h1>Imagen</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Imagen</th>
+				<td><img src="{{ asset(imagen.getUrlSubidas()) }}" alt="{{ imagen.getDescripcion() }}" title="{{ imagen.getDescripcion() }}" width="200px"></td>
+			</tr>
+			<tr>
+				<th>Id</th>
+				<td>{{ imagen.id }}</td>
+			</tr>
+			<tr>
+				<th>Nombre</th>
+				<td>{{ imagen.nombre }}</td>
+			</tr>
+			<tr>
+				<th>Descripcion</th>
+				<td>{{ imagen.descripcion }}</td>
+			</tr>
+			<tr>
+				<th>Categoria</th>
+				<td>{{ imagen.categoria }}</td>
+			</tr>
+			<tr>
+				<th>NumVisualizaciones</th>
+				<td>{{ imagen.numVisualizaciones }}</td>
+			</tr>
+			<tr>
+				<th>NumLike</th>
+				<td>{{ imagen.numLike }}</td>
+			</tr>
+			<tr>
+				<th>NumDownload</th>
+				<td>{{ imagen.numDownload }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_imagen_index') }}">back to list</a>
+
+	<a href="{{ path('app_imagen_edit', {'id': imagen.id}) }}">edit</a>
+
+	{{ include('imagen/_delete_form.html.twig') }}
+{% endblock %}

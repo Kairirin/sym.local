@@ -43,8 +43,8 @@ class Imagen
         $this->descripcion = $desc;
         $this->categoria = $cat;
         $this->numVisualizaciones = $numVis;
-        $this->numLikes = $numLikes;
-        $this->numDownloads = $numDownloads;
+        $this->numLike = $numLikes;
+        $this->numDownload = $numDownloads;
     }
 
     public function getId(): ?int
@@ -88,36 +88,36 @@ class Imagen
         return $this;
     }
 
-    public function getNumVis(): ?int
+    public function getNumVisualizaciones(): ?int
     {
         return $this->numVisualizaciones;
     }
 
-    public function setNumVis(int $numVis): static
+    public function setNumVisualizaciones(int $numVis): static
     {
         $this->numVisualizaciones = $numVis;
 
         return $this;
     }
 
-    public function getNumLikes(): ?int
+    public function getNumLike(): ?int
     {
         return $this->numLike;
     }
 
-    public function setNumLikes(int $numLike): static
+    public function setNumLike(int $numLike): static
     {
         $this->numLike = $numLike;
 
         return $this;
     }
 
-    public function getNumDown(): ?int
+    public function getNumDownload(): ?int
     {
         return $this->numDownload;
     }
 
-    public function setNumDown(int $numDown): static
+    public function setNumDownload(int $numDown): static
     {
         $this->numDownload = $numDown;
 
