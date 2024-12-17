@@ -1,4 +1,8 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {# {{ form_widget(form) }} #}
+    {{ form_errors(form) }}
+    {{ form_row(form.nombre, {'label':'Nombre del asociado:'}) }}
+    {{ form_row(form.logo,{'label':'Logotipo:'}) }}
+    {{ form_row(form.descripcion,{'label':'Sobre ti:'}) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
