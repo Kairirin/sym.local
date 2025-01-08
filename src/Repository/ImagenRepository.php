@@ -24,6 +24,16 @@ class ImagenRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Imagen[] Returns an array of Imagen objects
+     */
+    public function findLikeDescripcion(string $value): array
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->Where($qb->expr()->like('i.descripcion', ':val'))->setParameter('val', '%' . $value . '%');
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Imagen[] Returns an array of Imagen objects
     //     */
