@@ -34,6 +34,15 @@ class ImagenRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findImagenesConCategoria(string $ordenacion, string $tipoOrdenacion)
+    {
+        $qb = $this->createQueryBuilder('imagen');
+        $qb->addSelect('categoria')
+            ->innerJoin('imagen.categoria', 'categoria')
+            ->orderBy('imagen.' . $ordenacion, $tipoOrdenacion);
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Imagen[] Returns an array of Imagen objects
     //     */

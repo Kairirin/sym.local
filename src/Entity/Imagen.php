@@ -25,9 +25,6 @@ class Imagen
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $descripcion = null;
 
-    #[ORM\Column]
-    private ?int $categoria = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $numVisualizaciones = null;
 
@@ -40,17 +37,21 @@ class Imagen
     #[ORM\Column(nullable: false)]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'imagenes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categoria $categoria = null;
+
     const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
     const RUTA_IMAGENES_GALERIA = 'images/index/gallery/';
     const RUTA_IMAGENES_CLIENTES = 'images/clients/';
     const RUTA_IMAGENES_SUBIDAS = 'images/galeria/';
 
-    public function __construct(string $nombre = "", string $desc = "", int $cat = 1, int $numVis = 0, int $numLikes = 0, int $numDownloads = 0, string $password = "")
+    public function __construct(string $nombre = "", string $desc = "", /* string $categoria = "", */ int $numVis = 0, int $numLikes = 0, int $numDownloads = 0, string $password = "")
     {
         $this->id = null;
         $this->nombre = $nombre;
         $this->descripcion = $desc;
-        $this->categoria = $cat;
+/*         $this->categoria = $categoria; */
         $this->numVisualizaciones = $numVis;
         $this->numLike = $numLikes;
         $this->numDownload = $numDownloads;
@@ -86,11 +87,6 @@ class Imagen
         return $this;
     }
 
-    public function getCategoria(): ?int
-    {
-        return $this->categoria;
-    }
-
     public function getPassword(): ?string
     {
         return $this->password;
@@ -99,13 +95,6 @@ class Imagen
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function setCategoria(int $categoria): static
-    {
-        $this->categoria = $categoria;
 
         return $this;
     }
@@ -164,5 +153,17 @@ class Imagen
     public function getUrlSubidas(): string
     {
         return self::RUTA_IMAGENES_SUBIDAS . $this->getNombre();
+    }
+
+    public function getCategoria(): ?Categoria
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(?Categoria $categoria): static
+    {
+        $this->categoria = $categoria;
+
+        return $this;
     }
 }
