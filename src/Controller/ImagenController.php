@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\BLL\ImagenBLL;
 use App\Entity\Imagen;
 use App\Form\ImagenType;
 use App\Repository\ImagenRepository;
@@ -17,9 +18,9 @@ final class ImagenController extends AbstractController
 {
     #[Route(name: 'app_imagen_index', methods: ['GET'])]
     #[Route('/orden/{ordenacion}', name: 'app_imagen_index_ordenado', methods: ['GET'])]
-    public function index(Request $requestStack, ImagenRepository $imagenRepository, string $ordenacion = 'id'): Response
+    public function index(ImagenBLL $imagenBLL, string $ordenacion = 'id'): Response
     {
-        if (!is_null($ordenacion)) { // Cuando se establece un tipo de ordenación específico
+        /* if (!is_null($ordenacion)) { // Cuando se establece un tipo de ordenación específico
             $tipoOrdenacion = 'asc'; // Por defecto si no se había guardado antes en la variable de sesión
             $session = $requestStack->getSession(); // Abrir la sesión
             $imagenesOrdenacion = $session->get('imagenesOrdenacion');
@@ -39,8 +40,9 @@ final class ImagenController extends AbstractController
             $tipoOrdenacion = 'asc';
         }
 
-        /* $imagenes = $imagenRepository->findBy([], [$ordenacion => $tipoOrdenacion]); */
         $imagenes = $imagenRepository->findImagenesConCategoria($ordenacion, $tipoOrdenacion);
+ */
+        $imagenes = $imagenBLL->getImagenesConOrdenacion($ordenacion);
 
         return $this->render('imagen/index.html.twig', [
             'imagenes' => $imagenes
@@ -67,6 +69,7 @@ final class ImagenController extends AbstractController
 
             $entityManager->persist($imagen);
             $entityManager->flush();
+            $this->addFlash('mensaje', 'Se ha creado la imagen ' . $imagen->getNombre());
 
             return $this->redirectToRoute('app_imagen_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -81,9 +84,15 @@ final class ImagenController extends AbstractController
     public function busqueda(Request $request, ImagenRepository $imagenRepository): Response
     {
         $busqueda = $request->request->get('busqueda');
-        $imagenes = $imagenRepository->findLikeDescripcion($busqueda);
+        $fechaInicial = $request->request->get('fechaInicial');
+        $fechaFinal = $request->request->get('fechaFinal');
+        $imagenes = $imagenRepository->findImagenes($busqueda, $fechaInicial, $fechaFinal);
+
         return $this->render('imagen/index.html.twig', [
-            'imagenes' => $imagenes
+            'imagenes' => $imagenes,
+            'busqueda' => $busqueda,
+            'fechaInicial' => $fechaInicial,
+            'fechaFinal' => $fechaFinal
         ]);
     }
 

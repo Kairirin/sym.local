@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ImagenRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,6 +41,9 @@ class Imagen
     #[ORM\ManyToOne(inversedBy: 'imagenes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categoria $categoria = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $fecha = null;
 
     const RUTA_IMAGENES_PORTFOLIO = 'images/index/portfolio/';
     const RUTA_IMAGENES_GALERIA = 'images/index/gallery/';
@@ -163,6 +167,18 @@ class Imagen
     public function setCategoria(?Categoria $categoria): static
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getFecha(): ?\DateTimeInterface
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha(?\DateTimeInterface $fecha): static
+    {
+        $this->fecha = $fecha;
 
         return $this;
     }

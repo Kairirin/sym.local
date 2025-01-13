@@ -6,6 +6,7 @@ use App\Entity\Categoria;
 use App\Entity\Imagen;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -43,6 +44,8 @@ class ImagenType extends AbstractType
             ->add('categoria', EntityType::class, [
                 'class'=>Categoria::class
                 ])
+            ->add('fecha',DateType::class, [
+                'widget' => 'single_text'])
             ->add('numVisualizaciones', NumberType::class)
             ->add('numLike', NumberType::class)
             ->add('numDownload', NumberType::class)
