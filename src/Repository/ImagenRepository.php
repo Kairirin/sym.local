@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Imagen;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,7 +30,7 @@ class ImagenRepository extends ServiceEntityRepository
     /**
      * @return Imagen[] Returns an array of Imagen objects
      */
-    public function findImagenes(string $descripcion, string $fechaInicial, $fechaFinal): array
+    public function findImagenes(string $descripcion, string $fechaInicial, $fechaFinal, User $usuario): array
     {
         $qb = $this->createQueryBuilder('i');
         if (!is_null($descripcion) && $descripcion !== '') {
@@ -50,16 +52,31 @@ class ImagenRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->lte('i.fecha', ':fechaFinal'))
                 ->setParameter('fechaFinal', $dtFechaFinal);
         }
+        $this->addUserFilter($qb, $usuario);
+
         return $qb->getQuery()->getResult();
     }
 
-    public function findImagenesConCategoria(string $ordenacion, string $tipoOrdenacion)
+    public function findImagenesConCategoria(string $ordenacion, string $tipoOrdenacion, User $usuario)
     {
         $qb = $this->createQueryBuilder('imagen');
         $qb->addSelect('categoria')
             ->innerJoin('imagen.categoria', 'categoria')
             ->orderBy('imagen.' . $ordenacion, $tipoOrdenacion);
+
+        $this->addUserFilter($qb, $usuario);
         return $qb->getQuery()->getResult();
+    }
+
+    private function addUserFilter(QueryBuilder $qb, User $usuario)
+    {
+        // Si no es administrador se aplica el filtro.
+        // En caso contrario, no se aplica ningún filtro
+        if (in_array('ROLE_ADMIN', $usuario->getRoles()) === false) {
+            $qb->innerJoin('imagen.usuario', 'usuario')
+                ->andWhere($qb->expr()->eq('imagen.usuario', ':usuario'))
+                ->setParameter('usuario', $usuario);
+        }
     }
 
     //    /**
