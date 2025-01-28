@@ -1,0 +1,18 @@
+### Petición GET
+GET http://sym.local/api/prueba
+Content-Type: application/json
+
+### Send POST request with json body
+POST http://sym.local/api/imagenesapinueva
+Content-Type: application/json
+
+{
+"nombre": "imagen post 1",
+"descripcion": "esta es la imagen post 1",
+"numVisualizaciones": "21",
+"numLike": "12",
+"numDownload": "4",
+"categoria": "2",
+"usuario": "3",
+"fecha": "20/01/2024"
+}
