@@ -4,7 +4,6 @@ namespace App\BLL;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use App\Repository\ImagenRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -12,19 +11,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 abstract class BaseBLL
 {
     protected EntityManagerInterface $em;
-    protected ImagenRepository $imagenRepository;
     protected ValidatorInterface $validator;
     protected RequestStack $requestStack;
     protected Security $security;
+
     public function __construct(
         EntityManagerInterface $em,
-        ImagenRepository $imagenRepository,
         ValidatorInterface $validator,
         RequestStack $requestStack,
         Security $security
     ) {
         $this->em = $em;
-        $this->imagenRepository = $imagenRepository;
         $this->validator = $validator;
         $this->requestStack = $requestStack;
         $this->security = $security;
@@ -59,5 +56,21 @@ abstract class BaseBLL
             }
             throw new BadRequestHttpException($strError);
         }
+    }
+
+    public function entitiesToArray(array $entities)
+    {
+        if (is_null($entities))
+            return null;
+        $arr = [];
+        foreach ($entities as $entity)
+            $arr[] = $this->toArray($entity);
+        return $arr;
+    }
+
+    public function delete($entity)
+    {
+        $this->em->remove($entity);
+        $this->em->flush();
     }
 }

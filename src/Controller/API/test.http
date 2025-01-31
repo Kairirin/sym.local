@@ -16,3 +16,38 @@ Content-Type: application/json
 "usuario": "3",
 "fecha": "20/01/2024"
 }
+
+### GET de una imagen
+GET http://sym.local/api/imagenesapi/5
+Content-Type: application/json
+
+### GET de todas las imágenes
+GET http://sym.local/api/imagenesapi
+Content-Type: application/json
+
+### DELETE de una imagen
+DELETE http://sym.local/api/imagenesapi/7
+Content-Type: application/json
+
+### PUT de actualización de una imagen
+PUT http://sym.local/api/imagenesapi/14
+Content-Type: application/json
+
+{
+"nombre": "imagen actualizada",
+"descripcion": "esta es la imagen actualizado",
+"numVisualizaciones": "11",
+"numLike": "22",
+"numDownload": "33",
+"categoria": "1",
+"fecha": "02/02/2024",
+"usuario": "1"
+}
+
+### GET para obtener todos los datos ordenados
+GET http://sym.local/api/imagenesapi/ordenadas/descripcion
+Content-Type: application/json
+
+### GET para obtener datos filtrados
+GET http://sym.local/api/imagenesapi/ordenadas/id?fechaInicial=2024-01-03&descripcion=imag
+Content-Type: application/json
